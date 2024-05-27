@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { GeistSans } from "geist/font/sans";
+import { cn } from "@/lib/utils";
+import GridPattern from "@/components/layout/grid-pattern";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" >
+      <body className={cn(GeistSans.variable, "font-sans")}>
+
+        <GridPattern width={60} height={60} className="-z-10 opacity-70" />
+        <TooltipProvider>{children}
+        </TooltipProvider>
+      </body>
     </html>
   );
 }
+
