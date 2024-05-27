@@ -127,7 +127,6 @@ const UserInput = () => {
                       <SelectContent>
                         <SelectItem value="llama3-8b-8192">
                           <div className="flex items-start gap-3 text-muted-foreground">
-                            {/* <Rabbit className="size-5" /> */}
                             <MetaIcon className="size-5" />
                             <div className="grid gap-0.5">
                               <p>
@@ -136,9 +135,6 @@ const UserInput = () => {
                                 </span>
                                 8B
                               </p>
-                              {/* <p className="text-xs" data-description>
-                      Our fastest model for general use cases.
-                    </p> */}
                             </div>
                           </div>
                         </SelectItem>
@@ -151,17 +147,14 @@ const UserInput = () => {
                                 <span className="font-medium text-foreground mr-2">
                                   Mixtral
                                 </span>
-                                8x7b
+                                8x7b &#40;Recommended&#41;
                               </p>
-                              {/* <p className="text-xs" data-description>
-                      Performance and speed for efficiency.
-                    </p> */}
                             </div>
                           </div>
                         </SelectItem>
                         <SelectItem value="llama3-70b-8192">
                           <div className="flex items-start gap-3 text-muted-foreground">
-                            {/* <Rabbit className="size-5" /> */}
+                        
                             <MetaIcon className="size-5" />
                             <div className="grid gap-0.5">
                               <p>
@@ -170,9 +163,6 @@ const UserInput = () => {
                                 </span>
                                 70b
                               </p>
-                              {/* <p className="text-xs" data-description>
-                      Our fastest model for general use cases.
-                    </p> */}
                             </div>
                           </div>
                         </SelectItem>
