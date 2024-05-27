@@ -147,7 +147,7 @@ const UserInput = () => {
                                 <span className="font-medium text-foreground mr-2">
                                   Mixtral
                                 </span>
-                                8x7b &#40;Recommended&#41;
+                                8x7b 
                               </p>
                             </div>
                           </div>
@@ -161,7 +161,7 @@ const UserInput = () => {
                                 <span className="font-medium text-foreground mr-2">
                                   Llama 3
                                 </span>
-                                70b
+                                70b &#40;Recommended&#41;
                               </p>
                             </div>
                           </div>
