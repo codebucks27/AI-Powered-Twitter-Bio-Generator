@@ -1,6 +1,4 @@
-import { Copy } from "lucide-react";
 import React, { useState } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Button } from "../ui/button";
 
 const CopyLabel = ({ text }: { text: string }) => {
@@ -9,7 +7,7 @@ const CopyLabel = ({ text }: { text: string }) => {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      console.log("Text copied to clipboard");
+      // console.log("Text copied to clipboard");
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }

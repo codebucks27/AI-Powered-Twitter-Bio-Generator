@@ -5,6 +5,11 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { z } from "zod";
 import endent from "endent";
 
+const groq = createOpenAI({
+  apiKey: process.env.GROQ_API_KEY ?? "",
+  baseURL: "https://api.groq.com/openai/v1",
+});
+
 const systemPrompt = endent`
 You are an AI assistant tasked with generating Twitter bios based on user input.
 
@@ -29,20 +34,17 @@ Bio Requirements:
   - Avoid using too many buzzwords or overdoing humor.
   - Ensure the bio length is between 120 and 160 characters.
   - Provide at least four different bio options.
-  - If 'Add Emojis' is true, include relevant emojis; if false, do not include any emojis.
+  - If 'Add Emojis' is true, include relevant emojis; if false, you must include any emojis.
+  - The response must be in JSON format
 
 Additional Guidelines:
-  - Do not use hashtags.
+  - Do not include hashtags.
   - Maintain clarity and coherence in each bio.
+  - Provide response in JSON format only
 
 Do not include any description, do not include the \`\`\`.
   Code (no \`\`\`):
   `;
-
-const groq = createOpenAI({
-  apiKey: process.env.GROQ_API_KEY ?? "",
-  baseURL: "https://api.groq.com/openai/v1",
-});
 
 export async function generateBio(
   input: string,
@@ -70,7 +72,6 @@ export async function generateBio(
       ),
     }),
   });
-
   // console.log(warnings, finishReason, rawResponse);
 
   return { data };

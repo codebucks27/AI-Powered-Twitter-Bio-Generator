@@ -82,14 +82,19 @@ const UserInput = () => {
     Bio Type: ${values.type},
     Add Emojis: ${values.emojis}
     `;
-    // ${values.emojis ? 'Add emojis' : ''}
-    const { data } = await generateBio(
-      UpdatedValues,
-      values.temperature,
-      values.model
-    );
-    setOutput(data);
-    setLoading(false);
+
+    try {
+      const { data } = await generateBio(
+        UpdatedValues,
+        values.temperature,
+        values.model
+      );
+      setOutput(data);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   }
 
   return (
@@ -147,14 +152,13 @@ const UserInput = () => {
                                 <span className="font-medium text-foreground mr-2">
                                   Mixtral
                                 </span>
-                                8x7b 
+                                8x7b
                               </p>
                             </div>
                           </div>
                         </SelectItem>
                         <SelectItem value="llama3-70b-8192">
                           <div className="flex items-start gap-3 text-muted-foreground">
-                        
                             <MetaIcon className="size-5" />
                             <div className="grid gap-0.5">
                               <p>
@@ -168,7 +172,6 @@ const UserInput = () => {
                         </SelectItem>
                       </SelectContent>
                     </Select>
-
                     <FormMessage />
                   </FormItem>
                 )}
