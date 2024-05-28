@@ -30,6 +30,7 @@ Generate the Bio:
 Bio Requirements:
 
   - Use an informal and approachable tone.
+  - Do not include hashtags or any words start with #.
   - Highlight the most important information about the user.
   - Avoid using too many buzzwords or overdoing humor.
   - Ensure the bio length is between 120 and 160 characters.
@@ -38,7 +39,6 @@ Bio Requirements:
   - The response must be in JSON format
 
 Additional Guidelines:
-  - Do not include hashtags.
   - Maintain clarity and coherence in each bio.
   - Provide response in JSON format only
 
