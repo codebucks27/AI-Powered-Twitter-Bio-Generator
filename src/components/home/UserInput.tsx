@@ -1,24 +1,10 @@
 "use client";
 import React, { useContext } from "react";
-import { Button } from "@/components/ui/button";
-import { Info, Loader2 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Slider } from "@/components/ui/slider";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -26,25 +12,36 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { BioContext } from "@/context/BioContext";
-import { generateBio } from "../../app/actions";
-import { Switch } from "../ui/switch";
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import MetaIcon from "../icons/Meta";
 import MistralIcon from "../icons/Mistral";
+import { Slider } from "../ui/slider";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Info, Loader2 } from "lucide-react";
+import { Textarea } from "../ui/textarea";
+import { Switch } from "../ui/switch";
+import { generateBio } from "@/app/actions";
+import { BioContext } from "@/context/BioContext";
 
 const formSchema = z.object({
-  model: z.string().min(1, "Model is required"),
+  model: z.string().min(1, "Model is required!"),
   temperature: z
     .number()
-    .min(0, "Temperature must be at least 0")
-    .max(2, "Temperature must be at most 2"),
+    .min(0, "Temperature must be atleast 0")
+    .max(2, "Temperature must be at most 1"),
   content: z
     .string()
-    .min(50, "Content should atleast have 50 characters.")
+    .min(50, "Content should atlest have 50 characters.")
     .max(500, "Content should not exceed 500 character limit."),
   type: z.enum(["personal", "brand"], {
-    errorMap: () => ({ message: "Role is required" }),
+    errorMap: () => ({ message: "Type is required!" }),
   }),
   tone: z.enum(
     [
@@ -55,12 +52,15 @@ const formSchema = z.object({
       "passionate",
       "thoughtful",
     ],
-    { errorMap: () => ({ message: "Tone is required" }) }
+    {
+      errorMap: () => ({ message: "Tone is required!" }),
+    }
   ),
   emojis: z.boolean(),
 });
 
 const UserInput = () => {
+  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,21 +74,26 @@ const UserInput = () => {
   });
 
   const { setOutput, setLoading, loading } = useContext(BioContext);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    // console.log(values);
     setLoading(true);
-    const UpdatedValues = `User Input:
-    About User: ${values.content},
+
+    const userInputValues = `
+    User Input: ${values.content},
     Bio Tone: ${values.tone},
     Bio Type: ${values.type},
     Add Emojis: ${values.emojis}
     `;
-
     try {
       const { data } = await generateBio(
-        UpdatedValues,
+        userInputValues,
         values.temperature,
         values.model
       );
+      // console.log(data);
       setOutput(data);
       setLoading(false);
     } catch (e) {
@@ -98,10 +103,7 @@ const UserInput = () => {
   }
 
   return (
-    <div
-      className="relative flex flex-col items-start gap-8 "
-      x-chunk="dashboard-03-chunk-0"
-    >
+    <div className="relative flex flex-col items-start gap-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -116,69 +118,66 @@ const UserInput = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Model</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          id="model"
-                          className="items-start [&_[data-description]]:hidden"
-                        >
-                          <SelectValue placeholder="Select a model" />
-                        </SelectTrigger>
-                      </FormControl>
-
-                      <SelectContent>
-                        <SelectItem value="llama3-8b-8192">
-                          <div className="flex items-start gap-3 text-muted-foreground">
-                            <MetaIcon className="size-5" />
-                            <div className="grid gap-0.5">
-                              <p>
-                                <span className="font-medium text-foreground mr-2">
-                                  Llama 3
-                                </span>
-                                8B
-                              </p>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a model" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="llama3-8b-8192">
+                            <div className="flex items-start gap-3 text-muted-foreground">
+                              <MetaIcon className="size-5" />
+                              <div>
+                                <p>
+                                  <span className="text-foreground font-medium mr-2">
+                                    Llama 3
+                                  </span>
+                                  8B
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="mixtral-8x7b-32768">
-                          <div className="flex items-start gap-3 text-muted-foreground">
-                            {/* <Bird className="size-5" /> */}
-                            <MistralIcon className="size-5" />
-                            <div className="grid gap-0.5">
-                              <p>
-                                <span className="font-medium text-foreground mr-2">
-                                  Mixtral
-                                </span>
-                                8x7b
-                              </p>
+                          </SelectItem>
+                          <SelectItem value="mixtral-8x7b-32768">
+                            <div className="flex items-start gap-3 text-muted-foreground">
+                              <MistralIcon className="size-5" />
+                              <div>
+                                <p>
+                                  <span className="text-foreground font-medium mr-2">
+                                    Mixtral
+                                  </span>
+                                  8x7b
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="llama3-70b-8192">
-                          <div className="flex items-start gap-3 text-muted-foreground">
-                            <MetaIcon className="size-5" />
-                            <div className="grid gap-0.5">
-                              <p>
-                                <span className="font-medium text-foreground mr-2">
-                                  Llama 3
-                                </span>
-                                70b &#40;Recommended&#41;
-                              </p>
+                          </SelectItem>
+                          <SelectItem value="llama3-70b-8192">
+                            <div className="flex items-start gap-3 text-muted-foreground">
+                              <MetaIcon className="size-5" />
+                              <div>
+                                <p>
+                                  <span className="text-foreground font-medium mr-2">
+                                    Llama 3
+                                  </span>
+                                  70B
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="grid gap-3 mb-2">
+            <div className="grid gap-3">
               <FormField
                 control={form.control}
                 name="temperature"
@@ -187,32 +186,32 @@ const UserInput = () => {
                     <FormLabel className="flex items-center justify-between pb-2">
                       <span className="flex items-center justify-center">
                         Creativity
-                        <Tooltip delayDuration={400}>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 ml-1 cursor-pointer" />
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Info className="w-4 h-4 ml-1 cursor-pointer" />
                           </TooltipTrigger>
                           <TooltipContent
                             sideOffset={25}
                             collisionPadding={20}
                             className="max-w-sm"
                           >
-                            A higher setting produces more creative and
-                            surprising bios, while a lower setting sticks to
-                            more predictable and conventional styles.
+                            <p>
+                              A higher setting produces more creative and
+                              surprising bios, while a lower setting sticks to
+                              more predictable and conventional styles.
+                            </p>
                           </TooltipContent>
                         </Tooltip>
-                      </span>{" "}
+                      </span>
                       <span>{value}</span>
                     </FormLabel>
                     <FormControl>
                       <Slider
+                        defaultValue={[1]}
                         min={0}
                         max={2}
                         step={0.1}
-                        defaultValue={[1]}
-                        className={"w-full"}
                         onValueChange={(val) => {
-                          console.log(val);
                           onChange(val[0]);
                         }}
                       />
@@ -235,16 +234,16 @@ const UserInput = () => {
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>About Yourself</FormLabel>
+                    <FormLabel className="flex items-center justify-between pb-2">
+                      About Yourself
+                    </FormLabel>
                     <FormControl>
                       <Textarea
-                        id="content"
-                        placeholder="Add your old bio or write few sentances about yourself"
                         {...field}
-                        className="min-h-[9.5rem]"
+                        placeholder="Add your old twitter bio or write few sentances about yourself"
+                        className="min-h-[10rem]"
                       />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -257,16 +256,13 @@ const UserInput = () => {
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type</FormLabel>
+                    <FormLabel className="">Type</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger
-                          id="model"
-                          className="items-start [&_[data-description]]:hidden"
-                        >
+                        <SelectTrigger>
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                       </FormControl>
@@ -275,26 +271,23 @@ const UserInput = () => {
                         <SelectItem value="brand">Brand</SelectItem>
                       </SelectContent>
                     </Select>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="tone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tone</FormLabel>
+                    <FormLabel className="">Tone</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger
-                          id="model"
-                          className="items-start [&_[data-description]]:hidden"
-                        >
+                        <SelectTrigger>
                           <SelectValue placeholder="Select tone" />
                         </SelectTrigger>
                       </FormControl>
@@ -309,7 +302,6 @@ const UserInput = () => {
                         <SelectItem value="thoughtful">Thoughtful</SelectItem>
                       </SelectContent>
                     </Select>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -323,20 +315,20 @@ const UserInput = () => {
                 render={({ field }) => (
                   <FormItem className="flex items-center">
                     <FormLabel className="text-sm mr-4">Add Emojis</FormLabel>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        className="!my-0"
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="!my-0"
+                    />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
           </fieldset>
+
           <Button className="rounded" type="submit" disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             Generate
           </Button>
         </form>

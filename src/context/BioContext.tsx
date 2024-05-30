@@ -1,13 +1,15 @@
 "use client";
-import React, { createContext, useState } from "react";
 
-interface BioContextType {
+import { createContext, useState } from "react";
+
+interface BioContextTypes {
   output: { data: { bio: string }[] };
   loading: boolean;
   setOutput: React.Dispatch<React.SetStateAction<{ data: { bio: string }[] }>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const BioContext = createContext<BioContextType>({
+
+export const BioContext = createContext<BioContextTypes>({
   output: { data: [] },
   loading: false,
   setOutput: () => {},
@@ -19,9 +21,10 @@ export const BioProvider = ({ children }: { children: React.ReactNode }) => {
     data: [],
   });
   const [loading, setLoading] = useState(false);
+  console.log("Output Values: ", output);
 
   return (
-    <BioContext.Provider value={{ setOutput, output, setLoading, loading }}>
+    <BioContext.Provider value={{ output, setOutput, setLoading, loading }}>
       {children}
     </BioContext.Provider>
   );

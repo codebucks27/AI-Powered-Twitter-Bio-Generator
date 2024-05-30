@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
 
@@ -26,12 +25,11 @@ export function GridPattern({
   const id = useId();
 
   return (
-    <>
-        <svg
+    <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none fixed inset-0 h-screen w-screen fill-gray-400/20 stroke-gray-400/20 overflow-hidden",
-        className
+        "pointer-events-none fixed inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+        className,
       )}
       {...props}
     >
@@ -67,7 +65,6 @@ export function GridPattern({
         </svg>
       )}
     </svg>
-    </>
   );
 }
 

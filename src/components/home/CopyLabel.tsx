@@ -2,26 +2,28 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 
 const CopyLabel = ({ text }: { text: string }) => {
-  const [label, setLabel] = useState<string>("copy");
+  const [label, setLabel] = useState("copy");
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      // console.log("Text copied to clipboard");
     } catch (err) {
-      console.error("Failed to copy text: ", err);
+      console.error("Failed to copy the text: ", err);
     }
   };
 
-  const handleCopyClick = () => {
+  const handleClick = () => {
     copyToClipboard(text);
     setLabel("copied!");
   };
 
   return (
-    <Button variant={"outline"} size={"sm"} className="text-sm text-muted-foreground bg-background my-0 h-auto rounded-none border border-primary/20 border-t-0 rounded-b-lg hover:bg-primary hover:text-primary-foreground pb-0.5" onClick={handleCopyClick}>
+    <Button
+      onClick={handleClick}
+      variant={"outline"}
+      className="text-sm text-muted-foreground bg-background my-0 h-auto rounded-none border border-primary/20 border-t-0 rounded-b-lg hover:bg-primary hover:text-primary-foreground pt-0 pb-0.5"
+    >
       {label}
-      
     </Button>
   );
 };
