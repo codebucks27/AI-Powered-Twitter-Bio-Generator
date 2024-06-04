@@ -22,7 +22,7 @@ If you want to learn how to create it please follow below tutorial👇: <br />
 
 ## Images of The AI App:
 
-![Next.js AI powered twitter Bio Generator Website Demo](https://github.com/codebucks27/AI-Powered-Twitter-Bio-Generator/tree/main/blob/main/Demo-App.png)
+![Next.js AI powered twitter Bio Generator Website Demo](https://github.com/codebucks27/AI-Powered-Twitter-Bio-Generator/blob/main/Demo-App.png)
 
 
 ## Resources Used in This Project
