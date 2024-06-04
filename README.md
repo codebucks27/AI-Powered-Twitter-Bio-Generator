@@ -1,3 +1,41 @@
+# Next.js AI powered twitter Bio Generator Using Groq | Shadcn | Llama 3 🔥
+
+![GitHub stars](https://img.shields.io/github/stars/codebucks27/AI-Powered-Twitter-Bio-Generator?style=social&logo=ApacheSpark&label=Stars)&nbsp;&nbsp;
+![GitHub forks](https://img.shields.io/github/forks/codebucks27/AI-Powered-Twitter-Bio-Generator?style=social&logo=KashFlow&maxAge=3600)&nbsp;&nbsp;
+![Github Followers](https://img.shields.io/github/followers/codebucks27.svg?style=social&label=Follow)&nbsp;&nbsp;<br />
+
+This repository contains **final code** for Next.js AI powered twitter Bio Generator. <br />
+
+For Demo checkout following link👇: <br />
+[Next.js AI powered twitter Bio Generator Website Demo](https://ai-powered-twitter-bio-generator.vercel.app/) <br />
+
+If you want to learn how to create it please follow below tutorial👇: <br />
+➡ Tutorial Link 💚: [Build an AI powered twitter Bio Generator Using Next.js and Groq | Shadcn | Llama 3](https://youtu.be/pgnfQvkPyNQ) 
+[![YouTube Video Views](https://img.shields.io/youtube/views/pgnfQvkPyNQ
+)](https://youtu.be/pgnfQvkPyNQ) <br />
+
+💚 Checkout my personal website [DevDreaming](https://devdreaming.com) <br />
+
+---
+# ⭐DO NOT FORGET TO STAR THIS REPO⭐
+---
+
+## Images of The AI App:
+
+![Next.js AI powered twitter Bio Generator Website Demo](https://github.com/codebucks27/AI-Powered-Twitter-Bio-Generator/tree/main/blob/main/Demo-App.png)
+
+
+## Resources Used in This Project
+
+#### Development Resources
+
+- Font from [Vercel Fonts](https://vercel.com/font/) <br />
+- Icons from [Iconify Design](https://icon-sets.iconify.design/) <br />
+- LLMs from [Groq](https://groq.com/) <br />
+- UI components using [Shadcn UI](https://ui.shadcn.com/) and [Magic UI](https://magicui.design/) <br />
+- AI integration using [Vercel AI SDK](https://sdk.vercel.ai/) <br />
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
