@@ -20,11 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import MetaIcon from "../icons/Meta";
-import MistralIcon from "../icons/Mistral";
 import { Slider } from "../ui/slider";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Info, Loader2 } from "lucide-react";
+import { Bot, Info, Loader2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { generateBio } from "@/app/actions";
@@ -41,7 +39,7 @@ const formSchema = z.object({
     .min(50, "Content should atlest have 50 characters.")
     .max(500, "Content should not exceed 500 character limit."),
   type: z.enum(["personal", "brand"], {
-    errorMap: () => ({ message: "Type is required!" }),
+    error: "Type is required!",
   }),
   tone: z.enum(
     [
@@ -53,7 +51,7 @@ const formSchema = z.object({
       "thoughtful",
     ],
     {
-      errorMap: () => ({ message: "Tone is required!" }),
+      error: "Tone is required!",
     }
   ),
   emojis: z.boolean(),
@@ -64,7 +62,7 @@ const UserInput = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      model: "llama3-8b-8192",
+      model: "openai/gpt-oss-20b",
       temperature: 1,
       content: "",
       type: "personal",
@@ -109,7 +107,7 @@ const UserInput = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="grid w-full items-start gap-6"
         >
-          <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-sm">
+          <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-xs">
             <legend className="-ml-1 px-1 text-sm font-medium">Settings</legend>
             <div className="grid gap-3">
               <FormField
@@ -129,41 +127,28 @@ const UserInput = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="llama3-8b-8192">
+                          <SelectItem value="openai/gpt-oss-20b">
                             <div className="flex items-start gap-3 text-muted-foreground">
-                              <MetaIcon className="size-5" />
+                              <Bot className="size-5" />
                               <div>
                                 <p>
                                   <span className="text-foreground font-medium mr-2">
-                                    Llama 3
+                                    GPT-OSS
                                   </span>
-                                  8B
+                                  20B
                                 </p>
                               </div>
                             </div>
                           </SelectItem>
-                          <SelectItem value="mixtral-8x7b-32768">
+                          <SelectItem value="openai/gpt-oss-120b">
                             <div className="flex items-start gap-3 text-muted-foreground">
-                              <MistralIcon className="size-5" />
+                              <Bot className="size-5" />
                               <div>
                                 <p>
                                   <span className="text-foreground font-medium mr-2">
-                                    Mixtral
+                                    GPT-OSS
                                   </span>
-                                  8x7b
-                                </p>
-                              </div>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="llama3-70b-8192">
-                            <div className="flex items-start gap-3 text-muted-foreground">
-                              <MetaIcon className="size-5" />
-                              <div>
-                                <p>
-                                  <span className="text-foreground font-medium mr-2">
-                                    Llama 3
-                                  </span>
-                                  70B
+                                  120B
                                 </p>
                               </div>
                             </div>
@@ -223,7 +208,7 @@ const UserInput = () => {
             </div>
           </fieldset>
 
-          <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-sm">
+          <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-xs">
             <legend className="-ml-1 px-1 text-sm font-medium">
               User Input
             </legend>
@@ -318,7 +303,7 @@ const UserInput = () => {
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="!my-0"
+                      className="my-0!"
                     />
                     <FormMessage />
                   </FormItem>

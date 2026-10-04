@@ -1,6 +1,6 @@
 "use server";
 
-import { generateObject } from "ai";
+import { generateText, Output } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { z } from "zod";
 import endent from "endent";
@@ -53,26 +53,22 @@ export async function generateBio(
 ) {
   "use server";
 
-  const {
-    object: data,
-    warnings,
-    finishReason,
-    rawResponse,
-  } = await generateObject({
-    model: groq(model),
-    system: systemPrompt,
+  const { output: data } = await generateText({
+    model: groq.chat(model),
+    instructions: systemPrompt,
     prompt: input,
     temperature: temperature,
-    maxTokens: 1024,
-    schema: z.object({
-      data: z.array(
-        z.object({
-          bio: z.string().describe("Add generated bio here!"),
-        })
-      ),
+    maxOutputTokens: 1024,
+    output: Output.object({
+      schema: z.object({
+        data: z.array(
+          z.object({
+            bio: z.string().describe("Add generated bio here!"),
+          })
+        ),
+      }),
     }),
   });
-  // console.log(warnings, finishReason, rawResponse);
 
   return { data };
 }
