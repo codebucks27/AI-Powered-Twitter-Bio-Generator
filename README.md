@@ -78,3 +78,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 Upgraded to Next.js 16, React 19, AI SDK 7/OpenAI adapter 4, Tailwind CSS 4, Zod 4, and current UI dependencies. The SDK uses structured `generateText` output and explicit Groq Chat Completions; Tailwind compatibility changes preserve the original styling. Retired models are replaced by Groq's production `openai/gpt-oss-20b` and `openai/gpt-oss-120b` choices. `GROQ_API_KEY` and Groq billing remain unchanged; there is no streaming-flow change.
 
 Use Node.js 24+ and Bun 1.4.2. Run `bun install --frozen-lockfile`, then `bun run dev`; validate with `bun run lint`, `bun run typecheck`, and `bun run build`, and serve with `bun run start`. `bun.lock` replaces the npm lockfile. Next.js still outputs `.next/`. ESLint 9 and TypeScript 6 are retained for lint-plugin compatibility; Node types follow Node 24.
+
+## Other project
+
+For a profile photo to go with your bio, try [SmartHeadshots AI](https://www.smartheadshots.ai/), my separate hosted product.
